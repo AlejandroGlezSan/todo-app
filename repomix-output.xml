@@ -1,0 +1,1524 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.browserslistrc
+.editorconfig
+.gitignore
+angular.json
+karma.conf.js
+package.json
+README.md
+src/app/_guards/auth.guard.ts
+src/app/_services/auth.service.spec.ts
+src/app/_services/auth.service.ts
+src/app/_services/token-storage.service.spec.ts
+src/app/_services/token-storage.service.ts
+src/app/_services/user.service.spec.ts
+src/app/_services/user.service.ts
+src/app/app-routing.module.ts
+src/app/app.component.css
+src/app/app.component.html
+src/app/app.component.spec.ts
+src/app/app.component.ts
+src/app/app.module.ts
+src/app/home/home.component.css
+src/app/home/home.component.html
+src/app/home/home.component.spec.ts
+src/app/home/home.component.ts
+src/app/login/login.component.css
+src/app/login/login.component.html
+src/app/login/login.component.spec.ts
+src/app/login/login.component.ts
+src/app/models/task.model.ts
+src/app/models/user.model.ts
+src/app/register/register.component.css
+src/app/register/register.component.html
+src/app/register/register.component.spec.ts
+src/app/register/register.component.ts
+src/app/task/task.component.css
+src/app/task/task.component.html
+src/app/task/task.component.spec.ts
+src/app/task/task.component.ts
+src/assets/.gitkeep
+src/environments/environment.prod.ts
+src/environments/environment.ts
+src/favicon.ico
+src/index.html
+src/main.ts
+src/polyfills.ts
+src/styles.css
+src/test.ts
+tsconfig.app.json
+tsconfig.json
+tsconfig.spec.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/app/_guards/auth.guard.ts">
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { TokenStorageService } from '../_services/token-storage.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private tokenStorage: TokenStorageService, private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): boolean {
+    const token = this.tokenStorage.getToken();
+    if (token) {
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
+  }
+}
+</file>
+
+<file path="src/app/models/task.model.ts">
+export interface Task {
+  id?: number;
+  title: string;
+  description?: string;
+  completed: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId?: number;
+}
+</file>
+
+<file path="src/app/models/user.model.ts">
+export interface User {
+  id?: number;
+  username: string;
+  email?: string;
+  password?: string; // solo para registro/login
+  token?: string;
+}
+</file>
+
+<file path=".browserslistrc">
+# This file is used by the build system to adjust CSS and JS output to support the specified browsers below.
+# For additional information regarding the format and rule options, please see:
+# https://github.com/browserslist/browserslist#queries
+
+# For the full list of supported browsers by the Angular framework, please see:
+# https://angular.io/guide/browser-support
+
+# You can see what browsers were selected by your queries by running:
+#   npx browserslist
+
+last 1 Chrome version
+last 1 Firefox version
+last 2 Edge major versions
+last 2 Safari major versions
+last 2 iOS major versions
+Firefox ESR
+</file>
+
+<file path=".editorconfig">
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.ts]
+quote_type = single
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+</file>
+
+<file path=".gitignore">
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.angular/cache
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+</file>
+
+<file path="angular.json">
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "todo-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/todo-app",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "todo-app:build:production"
+            },
+            "development": {
+              "browserTarget": "todo-app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "todo-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "todo-app"
+}
+</file>
+
+<file path="karma.conf.js">
+// Karma configuration file, see link for more information
+// https://karma-runner.github.io/1.0/config/configuration-file.html
+
+module.exports = function (config) {
+  config.set({
+    basePath: '',
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage'),
+      require('@angular-devkit/build-angular/plugins/karma')
+    ],
+    client: {
+      jasmine: {
+        // you can add configuration options for Jasmine here
+        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
+        // for example, you can disable the random execution with `random: false`
+        // or set a specific seed with `seed: 4321`
+      },
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
+    jasmineHtmlReporter: {
+      suppressAll: true // removes the duplicated traces
+    },
+    coverageReporter: {
+      dir: require('path').join(__dirname, './coverage/todo-app'),
+      subdir: '.',
+      reporters: [
+        { type: 'html' },
+        { type: 'text-summary' }
+      ]
+    },
+    reporters: ['progress', 'kjhtml'],
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    autoWatch: true,
+    browsers: ['Chrome'],
+    singleRun: false,
+    restartOnFileChange: true
+  });
+};
+</file>
+
+<file path="package.json">
+{
+  "name": "todo-app",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~13.0.0",
+    "@angular/common": "~13.0.0",
+    "@angular/compiler": "~13.0.0",
+    "@angular/core": "~13.0.0",
+    "@angular/forms": "~13.0.0",
+    "@angular/platform-browser": "~13.0.0",
+    "@angular/platform-browser-dynamic": "~13.0.0",
+    "@angular/router": "~13.0.0",
+    "rxjs": "~7.4.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.0.3",
+    "@angular/cli": "~13.0.3",
+    "@angular/compiler-cli": "~13.0.0",
+    "@types/jasmine": "~3.10.0",
+    "@types/node": "^12.11.1",
+    "jasmine-core": "~3.10.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "~1.7.0",
+    "typescript": "~4.4.3"
+  }
+}
+</file>
+
+<file path="README.md">
+# TodoApp
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
+
+## Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+</file>
+
+<file path="src/app/_services/auth.service.spec.ts">
+import { TestBed } from '@angular/core/testing';
+
+import { AuthService } from './auth.service';
+
+describe('AuthService', () => {
+  let service: AuthService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(AuthService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+</file>
+
+<file path="src/app/_services/auth.service.ts">
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { User } from '../models/user.model';
+import { environment } from '../../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private apiUrl = `${environment.apiUrl}/auth`; // asumiendo que tenemos apiUrl en environment
+
+  constructor(private http: HttpClient) {}
+
+  login(credentials: { username: string; password: string }): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/login`, credentials);
+  }
+
+  register(user: { username: string; email: string; password: string }): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/register`, user);
+  }
+}
+</file>
+
+<file path="src/app/_services/token-storage.service.spec.ts">
+import { TestBed } from '@angular/core/testing';
+
+import { TokenStorageService } from './token-storage.service';
+
+describe('TokenStorageService', () => {
+  let service: TokenStorageService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(TokenStorageService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+</file>
+
+<file path="src/app/_services/token-storage.service.ts">
+import { Injectable } from '@angular/core';
+
+const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'auth-user';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TokenStorageService {
+  constructor() {}
+
+  signOut(): void {
+    window.localStorage.clear();
+  }
+
+  saveToken(token: string): void {
+    window.localStorage.removeItem(TOKEN_KEY);
+    window.localStorage.setItem(TOKEN_KEY, token);
+  }
+
+  getToken(): string | null {
+    return window.localStorage.getItem(TOKEN_KEY);
+  }
+
+  saveUser(user: any): void {
+    window.localStorage.removeItem(USER_KEY);
+    window.localStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  getUser(): any {
+    const user = window.localStorage.getItem(USER_KEY);
+    return user ? JSON.parse(user) : null;
+  }
+}
+</file>
+
+<file path="src/app/_services/user.service.spec.ts">
+import { TestBed } from '@angular/core/testing';
+
+import { UserService } from './user.service';
+
+describe('UserService', () => {
+  let service: UserService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(UserService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+</file>
+
+<file path="src/app/_services/user.service.ts">
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Task } from '../models/task.model';
+import { environment } from '../../environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService { // Renombrar a TaskService sería mejor, pero mantenemos por ahora
+  private apiUrl = `${environment.apiUrl}/tasks`;
+
+  constructor(private http: HttpClient) {}
+
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.apiUrl);
+  }
+
+  getTask(id: number): Observable<Task> {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`);
+  }
+
+  createTask(task: Partial<Task>): Observable<Task> {
+    return this.http.post<Task>(this.apiUrl, task);
+  }
+
+  updateTask(id: number, task: Partial<Task>): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/${id}`, task);
+  }
+
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+}
+</file>
+
+<file path="src/app/app-routing.module.ts">
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { TaskComponent } from './task/task.component';
+import { AuthGuard } from './_guards/auth.guard';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'tasks', component: TaskComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/home' }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+</file>
+
+<file path="src/app/app.component.css">
+
+</file>
+
+<file path="src/app/app.component.html">
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">TodoApp</a>
+    <div class="navbar-nav">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+      <a class="nav-link" routerLink="/tasks" routerLinkActive="active">Tasks</a>
+    </div>
+    <div class="navbar-nav ms-auto">
+      <a class="nav-link" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
+      <a class="nav-link" routerLink="/register" *ngIf="!isLoggedIn">Register</a>
+      <a class="nav-link" href="#" *ngIf="isLoggedIn" (click)="logout($event)">Logout</a>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>
+</file>
+
+<file path="src/app/app.component.spec.ts">
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
+
+describe('AppComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        AppComponent
+      ],
+    }).compileComponents();
+  });
+
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it(`should have as title 'todo-app'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('todo-app');
+  });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.content span')?.textContent).toContain('todo-app app is running!');
+  });
+});
+</file>
+
+<file path="src/app/app.component.ts">
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenStorageService } from './_services/token-storage.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  title = 'todo-app';
+  isLoggedIn = false;
+
+  constructor(
+    private tokenStorageService: TokenStorageService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    // Verificar si hay token al iniciar
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+  }
+
+  logout(event: Event): void {
+    event.preventDefault();
+    this.tokenStorageService.signOut();
+    this.isLoggedIn = false;
+    this.router.navigate(['/home']);
+  }
+}
+</file>
+
+<file path="src/app/home/home.component.css">
+
+</file>
+
+<file path="src/app/home/home.component.html">
+<div class="container mt-5 text-center">
+  <h1>Welcome to Todo App</h1>
+  <p class="lead">Manage your tasks efficiently</p>
+  <div>
+    <a routerLink="/login" class="btn btn-primary me-2">Login</a>
+    <a routerLink="/register" class="btn btn-secondary">Register</a>
+  </div>
+</div>
+</file>
+
+<file path="src/app/home/home.component.spec.ts">
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { HomeComponent } from './home.component';
+
+describe('HomeComponent', () => {
+  let component: HomeComponent;
+  let fixture: ComponentFixture<HomeComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ HomeComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HomeComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+</file>
+
+<file path="src/app/home/home.component.ts">
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
+</file>
+
+<file path="src/app/login/login.component.css">
+
+</file>
+
+<file path="src/app/login/login.component.html">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3>Login</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group mb-3">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                formControlName="username"
+                [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="loginForm.get('username')?.hasError('required')">
+                Username is required
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="loginForm.get('password')?.hasError('required')">
+                Password is required
+              </div>
+            </div>
+            <div *ngIf="isLoginFailed" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+          </form>
+          <p class="mt-3">
+            Don't have an account? <a routerLink="/register">Register</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</file>
+
+<file path="src/app/login/login.component.spec.ts">
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { LoginComponent } from './login.component';
+
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ LoginComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(LoginComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+</file>
+
+<file path="src/app/login/login.component.ts">
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
+import { TokenStorageService } from '../_services/token-storage.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.router.navigate(['/tasks']);
+    }
+  }
+
+  onSubmit(): void {
+    if (this.loginForm.invalid) return;
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (user) => {
+        this.tokenStorage.saveToken(user.token!);
+        this.tokenStorage.saveUser(user);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.router.navigate(['/tasks']);
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message || 'Login failed';
+        this.isLoginFailed = true;
+      }
+    });
+  }
+}
+</file>
+
+<file path="src/app/register/register.component.css">
+
+</file>
+
+<file path="src/app/register/register.component.html">
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3>Register</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="form-group mb-3">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                formControlName="username"
+                [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="registerForm.get('username')?.hasError('required')">
+                Username is required
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('required')">
+                Email is required
+              </div>
+              <div class="invalid-feedback" *ngIf="registerForm.get('email')?.hasError('email')">
+                Invalid email format
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+              />
+              <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('required')">
+                Password is required
+              </div>
+              <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('minlength')">
+                Password must be at least 6 characters
+              </div>
+            </div>
+            <div *ngIf="isSignUpFailed" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div *ngIf="isSuccessful" class="alert alert-success">
+              Registration successful! Redirecting to login...
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
+          </form>
+          <p class="mt-3">
+            Already have an account? <a routerLink="/login">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</file>
+
+<file path="src/app/register/register.component.spec.ts">
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { RegisterComponent } from './register.component';
+
+describe('RegisterComponent', () => {
+  let component: RegisterComponent;
+  let fixture: ComponentFixture<RegisterComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ RegisterComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(RegisterComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+</file>
+
+<file path="src/app/register/register.component.ts">
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.registerForm.invalid) return;
+
+    this.authService.register(this.registerForm.value).subscribe({
+      next: () => {
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+        setTimeout(() => this.router.navigate(['/login']), 2000);
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message || 'Registration failed';
+        this.isSignUpFailed = true;
+      }
+    });
+  }
+}
+</file>
+
+<file path="src/app/task/task.component.css">
+
+</file>
+
+<file path="src/app/task/task.component.html">
+<div class="container mt-4">
+  <h2>Tasks</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="mb-4">
+    <div class="row">
+      <div class="col-md-5">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="title"
+          placeholder="Task title"
+          [class.is-invalid]="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+        />
+        <div class="invalid-feedback">Title is required</div>
+      </div>
+      <div class="col-md-5">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="description"
+          placeholder="Description (optional)"
+        />
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100" [disabled]="taskForm.invalid">
+          {{ editingTask ? 'Update' : 'Add' }}
+        </button>
+        <button *ngIf="editingTask" type="button" class="btn btn-secondary w-100 mt-2" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <ul class="list-group">
+    <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <input
+          type="checkbox"
+          [checked]="task.completed"
+          (change)="toggleCompleted(task)"
+          class="form-check-input me-2"
+        />
+        <span [class.text-decoration-line-through]="task.completed">
+          {{ task.title }}
+        </span>
+        <small class="text-muted ms-2" *ngIf="task.description">{{ task.description }}</small>
+      </div>
+      <div>
+        <button class="btn btn-sm btn-outline-primary me-2" (click)="editTask(task)">Edit</button>
+        <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task.id!)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>
+</file>
+
+<file path="src/app/task/task.component.spec.ts">
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { TaskComponent } from './task.component';
+
+describe('TaskComponent', () => {
+  let component: TaskComponent;
+  let fixture: ComponentFixture<TaskComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ TaskComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TaskComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
+</file>
+
+<file path="src/app/task/task.component.ts">
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Task } from '../models/task.model';
+import { UserService } from '../_services/user.service'; // Será TaskService
+
+@Component({
+  selector: 'app-task',
+  templateUrl: './task.component.html',
+  styleUrls: ['./task.component.css']
+})
+export class TaskComponent implements OnInit {
+  tasks: Task[] = [];
+  taskForm: FormGroup;
+  editingTask: Task | null = null;
+  errorMessage = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService // TaskService
+  ) {
+    this.taskForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadTasks();
+  }
+
+  loadTasks(): void {
+    this.userService.getTasks().subscribe({
+      next: (tasks) => this.tasks = tasks,
+      error: (err) => this.errorMessage = 'Error loading tasks'
+    });
+  }
+
+  onSubmit(): void {
+    if (this.taskForm.invalid) return;
+
+    if (this.editingTask) {
+      this.userService.updateTask(this.editingTask.id!, this.taskForm.value).subscribe({
+        next: (updated) => {
+          const index = this.tasks.findIndex(t => t.id === updated.id);
+          if (index !== -1) this.tasks[index] = updated;
+          this.cancelEdit();
+        },
+        error: (err) => this.errorMessage = 'Error updating task'
+      });
+    } else {
+      this.userService.createTask(this.taskForm.value).subscribe({
+        next: (newTask) => {
+          this.tasks.push(newTask);
+          this.taskForm.reset();
+        },
+        error: (err) => this.errorMessage = 'Error creating task'
+      });
+    }
+  }
+
+  editTask(task: Task): void {
+    this.editingTask = task;
+    this.taskForm.patchValue({
+      title: task.title,
+      description: task.description
+    });
+  }
+
+  cancelEdit(): void {
+    this.editingTask = null;
+    this.taskForm.reset();
+  }
+
+  deleteTask(id: number): void {
+    if (confirm('Are you sure?')) {
+      this.userService.deleteTask(id).subscribe({
+        next: () => {
+          this.tasks = this.tasks.filter(t => t.id !== id);
+        },
+        error: (err) => this.errorMessage = 'Error deleting task'
+      });
+    }
+  }
+
+  toggleCompleted(task: Task): void {
+    const updated = { ...task, completed: !task.completed };
+    this.userService.updateTask(task.id!, updated).subscribe({
+      next: (res) => {
+        task.completed = res.completed;
+      },
+      error: (err) => this.errorMessage = 'Error updating task'
+    });
+  }
+}
+</file>
+
+<file path="src/assets/.gitkeep">
+
+</file>
+
+<file path="src/environments/environment.prod.ts">
+export const environment = {
+  production: true,
+  apiUrl: 'https://miapi.com/api' // cambiar en producción
+};
+</file>
+
+<file path="src/environments/environment.ts">
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:3000/api' // ejemplo, ajustar según backend
+};
+</file>
+
+<file path="src/index.html">
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TodoApp</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+</file>
+
+<file path="src/main.ts">
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+</file>
+
+<file path="src/polyfills.ts">
+/**
+ * This file includes polyfills needed by Angular and is loaded before the app.
+ * You can add your own extra polyfills to this file.
+ *
+ * This file is divided into 2 sections:
+ *   1. Browser polyfills. These are applied before loading ZoneJS and are sorted by browsers.
+ *   2. Application imports. Files imported after ZoneJS that should be loaded before your main
+ *      file.
+ *
+ * The current setup is for so-called "evergreen" browsers; the last versions of browsers that
+ * automatically update themselves. This includes recent versions of Safari, Chrome (including
+ * Opera), Edge on the desktop, and iOS and Chrome on mobile.
+ *
+ * Learn more in https://angular.io/guide/browser-support
+ */
+
+/***************************************************************************************************
+ * BROWSER POLYFILLS
+ */
+
+/**
+ * By default, zone.js will patch all possible macroTask and DomEvents
+ * user can disable parts of macroTask/DomEvents patch by setting following flags
+ * because those flags need to be set before `zone.js` being loaded, and webpack
+ * will put import in the top of bundle, so user need to create a separate file
+ * in this directory (for example: zone-flags.ts), and put the following flags
+ * into that file, and then add the following code before importing zone.js.
+ * import './zone-flags';
+ *
+ * The flags allowed in zone-flags.ts are listed here.
+ *
+ * The following flags will work for all browsers.
+ *
+ * (window as any).__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
+ * (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick
+ * (window as any).__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames
+ *
+ *  in IE/Edge developer tools, the addEventListener will also be wrapped by zone.js
+ *  with the following flag, it will bypass `zone.js` patch for IE/Edge
+ *
+ *  (window as any).__Zone_enable_cross_context_check = true;
+ *
+ */
+
+/***************************************************************************************************
+ * Zone JS is required by default for Angular itself.
+ */
+import 'zone.js';  // Included with Angular CLI.
+
+
+/***************************************************************************************************
+ * APPLICATION IMPORTS
+ */
+</file>
+
+<file path="src/styles.css">
+/* You can add global styles to this file, and also import other style files */
+</file>
+
+<file path="src/test.ts">
+// This file is required by karma.conf.js and loads recursively all the .spec and framework files
+
+import 'zone.js/testing';
+import { getTestBed } from '@angular/core/testing';
+import {
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting
+} from '@angular/platform-browser-dynamic/testing';
+
+declare const require: {
+  context(path: string, deep?: boolean, filter?: RegExp): {
+    keys(): string[];
+    <T>(id: string): T;
+  };
+};
+
+// First, initialize the Angular testing environment.
+getTestBed().initTestEnvironment(
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting(),
+);
+
+// Then we find all the tests.
+const context = require.context('./', true, /\.spec\.ts$/);
+// And load the modules.
+context.keys().map(context);
+</file>
+
+<file path="tsconfig.app.json">
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}
+</file>
+
+<file path="tsconfig.json">
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2020",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
+</file>
+
+<file path="tsconfig.spec.json">
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine"
+    ]
+  },
+  "files": [
+    "src/test.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.d.ts"
+  ]
+}
+</file>
+
+<file path="src/app/app.module.ts">
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
+import { TaskComponent } from './task/task.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    TaskComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+</file>
+
+</files>

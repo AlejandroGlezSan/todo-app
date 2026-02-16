@@ -1,1 +1,57 @@
-<p>task works!</p>
+<div class="container mt-4">
+  <h2>Tasks</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="mb-4">
+    <div class="row">
+      <div class="col-md-5">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="title"
+          placeholder="Task title"
+          [class.is-invalid]="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+        />
+        <div class="invalid-feedback">Title is required</div>
+      </div>
+      <div class="col-md-5">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="description"
+          placeholder="Description (optional)"
+        />
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100" [disabled]="taskForm.invalid">
+          {{ editingTask ? 'Update' : 'Add' }}
+        </button>
+        <button *ngIf="editingTask" type="button" class="btn btn-secondary w-100 mt-2" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <ul class="list-group">
+    <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <input
+          type="checkbox"
+          [checked]="task.completed"
+          (change)="toggleCompleted(task)"
+          class="form-check-input me-2"
+        />
+        <span [class.text-decoration-line-through]="task.completed">
+          {{ task.title }}
+        </span>
+        <small class="text-muted ms-2" *ngIf="task.description">{{ task.description }}</small>
+      </div>
+      <div>
+        <button class="btn btn-sm btn-outline-primary me-2" (click)="editTask(task)">Edit</button>
+        <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task.id!)">Delete</button>
+      </div>
+    </li>
+  </ul>
+</div>
